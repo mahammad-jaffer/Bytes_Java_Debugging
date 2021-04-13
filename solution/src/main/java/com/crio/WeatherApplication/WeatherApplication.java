@@ -24,13 +24,7 @@ public class WeatherApplication {
     ForecastFetcher forecastFetcher = new ForecastFetcher();
     ForecastParser forecastParser = new ForecastParser();
 
-    CityWoeId[] cityWoeIds = null;
-    cityWoeIds = forecastFetcher.fetchWoeIds(args[0]);
-
-    for (CityWoeId cityWoeId : cityWoeIds) {
-      String willItRain = forecastParser.willItRain(
-          forecastFetcher.fetchWeather(cityWoeId.woeId)) ? "Will Rain" : "Won't Rain";
-      System.out.println(cityWoeId.city + " : " + willItRain);
-    }
+    String cityWoeIds = forecastFetcher.fetchWoeIds(args[0]);
+    System.out.println(cityWoeIds);
   }
 }

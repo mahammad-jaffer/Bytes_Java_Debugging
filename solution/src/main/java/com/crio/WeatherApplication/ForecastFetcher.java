@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ForecastFetcher {
 
-  public CityWoeId[] fetchWoeIds(String cityPrefix) throws IOException {
+  public String fetchWoeIds(String cityPrefix) throws IOException {
     // create url
     URL url = new URL("https://www.metaweather.com/api/location/search/?query=" + cityPrefix);
 
@@ -26,10 +26,9 @@ public class ForecastFetcher {
     while ((output = br.readLine()) != null) {
       jsonResponse.append(output);
     }
-    conn.disconnect();
 
-    ArrayList<CityWoeId> cityWoeIds = getWoeIdsFromJson(jsonResponse.toString());
-    return cityWoeIds.toArray(new CityWoeId[]{});
+    conn.disconnect();
+    return jsonResponse.toString();
   }
 
   private ArrayList<CityWoeId> getWoeIdsFromJson(String jsonString) throws IOException {
@@ -40,25 +39,5 @@ public class ForecastFetcher {
       cityWoeIds.add(new CityWoeId(cityDetail.title, cityDetail.woeid));
     }
     return cityWoeIds;
-  }
-
-  public String fetchWeather(Integer woeId) throws IOException {
-    // create url
-    URL url = new URL("https://www.metaweather.com/api/location/" + woeId + "/");
-
-    // Send Get request and fetch data
-    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-    conn.setRequestMethod("GET");
-    BufferedReader br = new BufferedReader(new InputStreamReader(
-        (conn.getInputStream())));
-
-    // Read data line-by-line from buffer & print it out
-    String output;
-    StringBuilder jsonResponse = new StringBuilder();
-    while ((output = br.readLine()) != null) {
-      jsonResponse.append(output);
-    }
-    conn.disconnect();
-    return jsonResponse.toString();
   }
 }
