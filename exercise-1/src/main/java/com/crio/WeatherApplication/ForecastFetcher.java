@@ -11,7 +11,8 @@ public class ForecastFetcher {
 
   public String fetchWoeIds(String cityPrefix) {
     // create url
-    URL url = new URL("http:www.metaweather.com/api/location/search/?query=" + cityPrefix);
+    String tokenId="a7636daac9b6f63e4ef65227ddeba3bd";      
+    URL url = new URL("https://api.openweathermap.org/data/2.5/forecast?q="+cityPrefix+"&appid="+tokenId);
 
     // Send Get request and fetch data
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
